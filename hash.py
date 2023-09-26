@@ -8,19 +8,19 @@ def	sha_convert(hash_string):
 
 key = sys.argv[2]
 char = "abcdefghijklmnopqrstuvwxyz"
-lenght = 5
 verif = False
 
 def	gen_comb(char, lenght):
 	for comb in itertools.product(char, repeat=lenght):
 		yield ''.join(comb)
 
-def	brute_force(char, lenght):
-	for comb in gen_comb(char, lenght):
-		if sha_convert(comb) == key:
-			break
-		#else:
-		#	print comb + " ---> " + sha_convert(comb)
+def	brute_force(char):
+	for lenght in range(1, 6):
+		for comb in gen_comb(char, lenght):
+			if sha_convert(comb) == key:
+				break
+			else:
+				print comb + " ---> " + sha_convert(comb)
 	return comb
 
 def	brute_force_dict(dictio):
@@ -32,8 +32,8 @@ def	brute_force_dict(dictio):
 				break
 			elif sha_convert(line) == key:
 				break
-			#else:
-			#	print line.strip('\n') + " ---> " + sha_convert(line)
+			else:
+				print line.strip('\n') + " ---> " + sha_convert(line)
 	return line
 
 if sys.argv[1] == "encrypt" and len(sys.argv) == 3:
@@ -46,7 +46,7 @@ elif sys.argv[1] == "decrypt" and len(sys.argv) == 4:
 		print "decrypted key = " + comb + " ---> " + sha_convert(comb)
 		verif = True
 	if verif == False:
-		comb = brute_force(char, lenght)
+		comb = brute_force(char)
 		if sha_convert(comb) == key:
 			print "key : " + key
 			print "decrypted key = " + comb + " ---> " + sha_convert(comb)
